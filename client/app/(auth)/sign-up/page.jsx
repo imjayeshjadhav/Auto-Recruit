@@ -3,8 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaUser, FaLock, FaEnvelope, FaPhone } from 'react-icons/fa';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const SignUp = () => {
+  const router = useRouter();
+  const [error, setError] = useState('');
   const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
@@ -14,23 +17,39 @@ const SignUp = () => {
     confirmPassword: ''
   });
 
-  // Handle hydration mismatch by only rendering after mount
   useEffect(() => {
     setMounted(true);
   }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (error) setError('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your signup logic here
+    
+    if (!formData.fullName || !formData.email || !formData.phone || !formData.password || !formData.confirmPassword) {
+      setError('All fields are required');
+      return;
+    }
+    
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    
+    if (formData.password.length < 6) {
+      setError('Password should be at least 6 characters');
+      return;
+    }
+    
     console.log('Form submitted:', formData);
+    router.push('/sign-in');
   };
 
   if (!mounted) {
-    return null; // Prevent hydration issues by not rendering until client-side
+    return null;
   }
 
   return (
@@ -55,6 +74,12 @@ const SignUp = () => {
               Sign in
             </Link>
           </p>
+
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="relative group">
@@ -136,4 +161,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp; 
+export default SignUp;
