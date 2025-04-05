@@ -1,14 +1,35 @@
-import Navbar from '@/components/Navbar'
-import React from 'react'
+// app/page.tsx or app/page.jsx
+
+'use client';
+
+import React, { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+import RecruitmentStatusChart from '@/components/recruitmentChart';
+import FeaturesGrid from '@/components/FeaturesGrid';
+import Footer from '@/components/Footer';
 
 const Page = () => {
-  return (
-    <div className="h-dvh w-full overflow-hidden bg-blue-400">
-      <div className='text-white text-3xl'>
-        Hello
-      </div>
-    </div>
-  )
-}
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: true });
+  }, []);
 
-export default Page
+  return (
+    <div>
+      <section data-aos="fade-up">
+        <RecruitmentStatusChart />
+      </section>
+
+      <section data-aos="fade-up" data-aos-delay="200">
+        <FeaturesGrid />
+      </section>
+
+      <section data-aos="fade-up" data-aos-delay="400">
+        <Footer />
+      </section>
+    </div>
+  );
+};
+
+export default Page;
