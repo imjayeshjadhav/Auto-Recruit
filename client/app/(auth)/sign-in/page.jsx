@@ -1,20 +1,21 @@
 'use client';
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaUser, FaLock } from 'react-icons/fa';
 import Link from 'next/link';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignIn = () => {
   const [mounted, setMounted] = useState(false);
-  const [activeTab, setActiveTab] = useState('client');
+  const [activeTab, setActiveTab] = useState('candidate');
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
+    password: '', 
     rememberMe: false
   });
+  const [loading, setLoading] = useState(false);
 
-  // Handle hydration mismatch by only rendering after mount
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -26,16 +27,64 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
+    setLoading(true);
+    
+    try {
+      const endpoint = activeTab === 'admin'
+        ? 'http://localhost:8080/auth/sign-in/admin'
+        : 'http://localhost:8080/auth/sign-in/candidate';
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+
+      // Store data in localStorage
+      localStorage.setItem('userData', JSON.stringify({
+        ...data.user,
+        token: data.token,
+        userType: activeTab
+      }));
+
+      toast.success('Login successful! Redirecting...', {
+        position: "top-right",
+        autoClose: 2000,
+      });
+
+      // Redirect after success
+      setTimeout(() => {
+        window.location.href = activeTab === 'admin' 
+          ? '/admin/dashboard' 
+          : '/candidate/dashboard';
+      }, 1500);
+
+    } catch (error) {
+      toast.error(error.message || 'Login failed. Please check your credentials', {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!mounted) {
-    return null; // Prevent hydration issues by not rendering until client-side
+    return null;
   }
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#1a1f37]">
+      <ToastContainer />
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -47,14 +96,14 @@ const SignIn = () => {
           <div className="flex mb-8 bg-white rounded-xl p-1.5 shadow-sm">
             <button
               type="button"
-              onClick={() => setActiveTab('client')}
+              onClick={() => setActiveTab('candidate')}
               className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
-                activeTab === 'client'
+                activeTab === 'candidate'
                   ? 'bg-[#0055ff] text-white shadow-lg shadow-blue-500/30'
                   : 'text-gray-600 hover:text-[#0055ff]'
               }`}
             >
-              Client
+              candidate
             </button>
             <button
               type="button"
@@ -78,7 +127,7 @@ const SignIn = () => {
           <p className="text-center mb-8 text-gray-600 text-sm">
             {"Don't have an account? "}
             <Link
-              href="/sign-up"
+              href={`/sign-up?userType=${activeTab}`}
               className="text-[#0055ff] hover:text-blue-700 font-medium"
             >
               Sign up
@@ -124,15 +173,15 @@ const SignIn = () => {
                 />
                 Remember me
               </label>
-              
             </div>
 
             <motion.button
               type="submit"
               whileTap={{ scale: 0.98 }}
-              className="w-full bg-[#0055ff] text-white py-3.5 rounded-xl font-medium hover:bg-blue-600 transition-colors duration-200 shadow-lg shadow-blue-500/30 mt-6"
+              disabled={loading}
+              className="w-full bg-[#0055ff] text-white py-3.5 rounded-xl font-medium hover:bg-blue-600 transition-colors duration-200 shadow-lg shadow-blue-500/30 mt-6 disabled:opacity-50"
             >
-              Login
+              {loading ? 'Logging in...' : 'Login'}
             </motion.button>
           </form>
         </div>
@@ -141,4 +190,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn; 
+export default SignIn;
