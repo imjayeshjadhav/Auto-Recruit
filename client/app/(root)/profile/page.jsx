@@ -3,10 +3,19 @@ import { useState } from 'react';
 import { Doughnut, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
 // Register ChartJS components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title);
 
 const UserDashboard = () => {
+  const router=useRouter()
+  const handleResumeGeneration =()=>{
+    router.push('http://localhost:3005/')
+  }
+  const handleInterviewGeneration =()=>{
+    router.push('http://localhost:3002/')
+  }
   const [activeTab, setActiveTab] = useState('overview');
   const [darkMode, setDarkMode] = useState(false);
   const [profile] = useState({
@@ -196,9 +205,23 @@ const UserDashboard = () => {
                     {profile.title} • {profile.location}
                   </p>
                 </div>
-                <span className={getStatusBadgeClass(profile.status)}>
-                  {profile.status.charAt(0).toUpperCase() + profile.status.slice(1)}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className={getStatusBadgeClass(profile.status)}>
+                    {profile.status.charAt(0).toUpperCase() + profile.status.slice(1)}
+                  </span>
+                  <p
+                    onClick={handleResumeGeneration}
+                    className={`inline-flex cursor-pointer items-center px-3 py-1 rounded-md text-sm font-medium ${darkMode ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-blue-50 text-blue-700 hover:bg-blue-100'}`}
+                  >
+                    Check Your Resume
+                  </p>
+                  <p
+                    onClick={handleInterviewGeneration}
+                    className={`inline-flex cursor-pointer items-center px-3 py-1 rounded-md text-sm font-medium ${darkMode ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-blue-50 text-blue-700 hover:bg-blue-100'}`}
+                  >
+                    Take an interview
+                  </p>
+                </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
                 {profile.skills.slice(0, 5).map((skill) => (
@@ -418,11 +441,11 @@ const UserDashboard = () => {
             <div className="flex items-center justify-between mb-6">
               <h2 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Your Documents</h2>
               <Link
-              href="/uploadResume"
-              className="text-[#0055ff] hover:text-blue-700 font-medium"
-            >
-              Upload new
-            </Link>
+                href="/uploadResume"
+                className="text-[#0055ff] hover:text-blue-700 font-medium"
+              >
+                Upload new
+              </Link>
             </div>
             
             <div className={`border rounded-lg overflow-hidden ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>

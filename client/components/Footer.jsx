@@ -1,50 +1,86 @@
+// components/Footer.jsx
 'use client';
 
-import React from 'react';
-import { Heart, Sparkles, ArrowUp } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Heart, ArrowUp, Linkedin, Twitter, Github } from 'lucide-react';
 
-const Footer = () => {
+export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <footer className="bg-gray-950 text-white py-10 px-6 mt-20 border-t border-gray-800">
-      <div className="max-w-7xl mx-auto text-center space-y-6">
-        {/* Gradient Line */}
-        <div className="h-1 w-32 mx-auto bg-gradient-to-r from-indigo-500 via-pink-500 to-red-500 rounded-full"></div>
+    <footer className="bg-gray-900 text-gray-300 pt-16 pb-8 px-4">
+      <div className="max-w-7xl mx-auto">
+        <motion.div 
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          className="h-1 w-32 mx-auto bg-gradient-to-r from-indigo-500 to-pink-500 rounded-full mb-12"
+        />
 
-        {/* Inspiring Line */}
-        <p className="text-xl md:text-2xl font-semibold flex justify-center items-center gap-2">
-          <Sparkles className="w-6 h-6 text-yellow-400 animate-pulse" />
-          <span className="bg-gradient-to-r from-indigo-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
-            Empowering Recruitment with Intelligence & Insight
-          </span>
-          <Sparkles className="w-6 h-6 text-yellow-400 animate-pulse" />
-        </p>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+          <div>
+            <h3 className="text-xl font-bold text-white mb-4">AI Recruiter</h3>
+            <p className="text-gray-400">
+              Transforming recruitment with artificial intelligence and machine learning.
+            </p>
+          </div>
 
-        {/* Button to Top */}
-        <button
-          onClick={scrollToTop}
-          className="inline-flex items-center gap-1 px-4 py-2 text-sm text-white bg-gradient-to-r from-indigo-600 to-pink-500 hover:to-red-500 rounded-full transition-all duration-300"
-        >
-          <ArrowUp className="w-4 h-4" />
-          Back to Top
-        </button>
+          <div>
+            <h4 className="text-lg font-semibold text-white mb-4">Product</h4>
+            <ul className="space-y-2">
+              {['Features', 'Pricing', 'API', 'Integrations'].map((item) => (
+                <li key={item}>
+                  <a href="#" className="text-gray-400 hover:text-white transition">{item}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        {/* Divider */}
-        <hr className="border-t border-gray-800 w-3/4 mx-auto" />
+          <div>
+            <h4 className="text-lg font-semibold text-white mb-4">Resources</h4>
+            <ul className="space-y-2">
+              {['Documentation', 'Blog', 'Case Studies', 'Help Center'].map((item) => (
+                <li key={item}>
+                  <a href="#" className="text-gray-400 hover:text-white transition">{item}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        {/* Copyright */}
-        <p className="text-sm text-gray-500">
-          &copy; {new Date().getFullYear()}{' '}
-          <span className="text-white font-medium">Auto-Recruit</span>. All rights reserved.
-        </p>
+          <div>
+            <h4 className="text-lg font-semibold text-white mb-4">Connect</h4>
+            <div className="flex gap-4">
+              <a href="#" className="text-gray-400 hover:text-white transition">
+                <Linkedin size={20} />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-white transition">
+                <Twitter size={20} />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-white transition">
+                <Github size={20} />
+              </a>
+            </div>
+          </div>
+        </div>
 
-      
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800">
+          <p className="text-gray-500 text-sm mb-4 md:mb-0">
+            © {new Date().getFullYear()} AI Recruiter. All rights reserved.
+          </p>
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={scrollToTop}
+            className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-pink-600 text-white rounded-full flex items-center gap-2"
+          >
+            <ArrowUp size={16} />
+            Back to Top
+          </motion.button>
+        </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
