@@ -63,7 +63,7 @@ const SignIn = () => {
       setTimeout(() => {
         window.location.href = activeTab === 'admin' 
           ? '/admin' 
-          : '/';
+          : '/profile';
       }, 1500);
 
     } catch (error) {

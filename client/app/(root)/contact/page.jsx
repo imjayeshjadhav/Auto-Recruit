@@ -124,7 +124,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold">Call Us</h4>
-                    <p className="text-gray-400">+1 (555) 123-4567</p>
+                    <p className="text-gray-400">+91 9405442242</p>
                   </div>
                 </div>
 
@@ -134,7 +134,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold">Visit Us</h4>
-                    <p className="text-gray-400">123 Tech Park, San Francisco, CA 94107</p>
+                    <p className="text-gray-400">MITAOE Alandi</p>
                   </div>
                 </div>
               </div>

@@ -19,16 +19,16 @@ const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [darkMode, setDarkMode] = useState(false);
   const [profile] = useState({
-    name: 'Anudeep Shinde',
+    name: 'Jayesh Jadhav',
     title: 'Senior Software Engineer',
-    location: 'San Francisco, CA',
-    email: 'john.doe@example.com',
-    phone: '(555) 123-4567',
-    linkedin: 'linkedin.com/in/johndoe',
-    github: 'github.com/johndoe',
+    location: 'MITAOE Alandi',
+    email: '14jayeshjadhav@gmail.com',
+    phone: '+91 9833395113',
+    linkedin: 'linkedin.com/in/',
+    github: 'github.com/imjayeshjadhav',
     status: 'selected',
-    resumeUrl: '/resumes/john-doe-resume.pdf',
-    skills: ['JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js', 'GraphQL', 'AWS', 'Docker', 'Kubernetes'],
+    resumeUrl: '/resumes/jayesh_resume.pdf',
+    skills: ['JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js', 'DSA'],
     interviewStats: {
       communication: 85,
       technical: 92,
@@ -191,7 +191,7 @@ const UserDashboard = () => {
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
             <div className="relative">
               <img
-                src="https://randomuser.me/api/portraits/men/32.jpg"
+                src="/podimg2.jpg"
                 alt="Profile"
                 className="w-20 h-20 rounded-full border-4 border-white shadow-md"
               />
@@ -462,7 +462,7 @@ const UserDashboard = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     <div className="ml-4">
-                      <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>John_Doe_Resume.pdf</p>
+                      <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>Jayesh_jadhav.pdf</p>
                       <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>2.4 MB</p>
                     </div>
                   </div>
