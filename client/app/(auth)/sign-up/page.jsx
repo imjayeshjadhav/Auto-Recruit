@@ -117,8 +117,8 @@ const SignUp = () => {
 
       setTimeout(() => {
         window.location.href = userType === 'admin' 
-          ? '/admin/dashboard' 
-          : '/';
+          ? '/sign-in' 
+          : '/sign-in';
       }, 1500);
 
     } catch (error) {

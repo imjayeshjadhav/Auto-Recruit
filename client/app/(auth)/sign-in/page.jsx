@@ -49,7 +49,6 @@ const SignIn = () => {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Store data in localStorage
       localStorage.setItem('userData', JSON.stringify({
         ...data.user,
         token: data.token,
@@ -61,11 +60,10 @@ const SignIn = () => {
         autoClose: 2000,
       });
 
-      // Redirect after success
       setTimeout(() => {
         window.location.href = activeTab === 'admin' 
-          ? '/admin/dashboard' 
-          : '/candidate/dashboard';
+          ? '/admin' 
+          : '/';
       }, 1500);
 
     } catch (error) {
